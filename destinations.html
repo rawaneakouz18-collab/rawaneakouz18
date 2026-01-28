@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destinations | Voyage Curated</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Destinations page specific styles */
+        .destinations-hero {
+            padding: 6rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .destination-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .destination-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .destination-content {
+            padding: 2rem;
+        }
+
+        .destination-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+            letter-spacing: 0.05em;
+        }
+
+        .destination-rating {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .destination-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: var(--text-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .map-container {
+            height: 400px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin: 4rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            max-width: 300px;
+        }
+
+        @media (max-width: 768px) {
+            .destination-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .map-container {
+                height: 300px;
+            }
+
+            .map-overlay {
+                position: static;
+                max-width: 100%;
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header without Profile Photo -->
+<header class="site-header">
+    <div class="header-content">
+        <h1 class="site-title">Destination Portfolio</h1>
+        <p class="tagline">Meticulously curated destinations for the sophisticated traveler. Each location selected for its unique character and refined experience.</p>
+    </div>
+</header>
+
+<!-- Minimalist Navigation -->
+<nav class="site-nav">
+    <div class="nav-container">
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="destinations.html" class="nav-link active">Destinations</a></li>
+            <li><a href="picker.html" class="nav-link">Destination Picker</a></li>
+            <li><a href="experience.html" class="nav-link">Experiences</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- QR Code -->
+<div class="qr-container">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://github.com/yourusername/voyage-curated"
+         alt="GitHub Repository" class="qr-code">
+    <div class="qr-label">GitHub Source</div>
+</div>
+
+<!-- Destinations Hero -->
+<main>
+    <section class="destinations-hero">
+        <div class="container">
+            <h2>Global Destination Portfolio</h2>
+            <p>Our collection represents the finest travel experiences worldwide, each vetted for sophistication, authenticity, and cultural depth.</p>
+        </div>
+    </section>
+
+    <!-- Destinations Grid - 30 Destinations -->
+    <section class="container">
+        <div class="destination-grid">
+            <!-- Destination 1-30 -->
+            <!-- Destination 1 -->
+            <article class="destination-card">
+                <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                     alt="Kyoto" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Japan</span>
+                        <span class="destination-rating">9.8/10</span>
+                    </div>
+                    <h3>Kyoto</h3>
+                    <p>Ancient capital where tradition meets contemporary sophistication. Home to 17 UNESCO World Heritage sites.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Cultural</span>
+                        <span class="tag">Historical</span>
+                        <span class="tag">Sophisticated</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 2 -->
+            <article class="destination-card">
+                <img src="images/pexels-skydream-14187938.jpg" alt="" class="destination-image"
+                     alt="Swiss Alps" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Switzerland</span>
+                        <span class="destination-rating">9.5/10</span>
+                    </div>
+                    <h3>Swiss Alps</h3>
+                    <p>Pristine alpine landscapes with world-class luxury accommodations and sophisticated mountain experiences.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Mountain</span>
+                        <span class="tag">Luxury</span>
+                        <span class="tag">Adventure</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 3 -->
+            <article class="destination-card">
+                <img src="images/pexels-pixabay-358223.jpg" alt="" class="destination-image"
+                     alt="Amalfi Coast" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Italy</span>
+                        <span class="destination-rating">9.2/10</span>
+                    </div>
+                    <h3>Amalfi Coast</h3>
+                    <p>Dramatic Mediterranean coastline with sophisticated seaside villages and exceptional culinary experiences.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Coastal</span>
+                        <span class="tag">Culinary</span>
+                        <span class="tag">Romantic</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 4 -->
+            <article class="destination-card">
+                <img src="images/paris.webp" alt="" class="destination-image"
+                     alt="Paris" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>France</span>
+                        <span class="destination-rating">9.7/10</span>
+                    </div>
+                    <h3>Paris</h3>
+                    <p>The epitome of European sophistication. Art, fashion, cuisine, and romance converge in this timeless city.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Urban</span>
+                        <span class="tag">Art</span>
+                        <span class="tag">Culinary</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 5 -->
+            <article class="destination-card">
+                <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                     alt="Bali" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Indonesia</span>
+                        <span class="destination-rating">9.0/10</span>
+                    </div>
+                    <h3>Bali</h3>
+                    <p>Island of gods, where spiritual tradition meets luxurious wellness retreats and pristine natural beauty.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Wellness</span>
+                        <span class="tag">Spiritual</span>
+                        <span class="tag">Tropical</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 6 -->
+            <article class="destination-card">
+                <img src="images/pexels-gryziu-31222656.jpg" alt="" class="destination-image"
+                     alt="New York" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>USA</span>
+                        <span class="destination-rating">9.4/10</span>
+                    </div>
+                    <h3>New York</h3>
+                    <p>The ultimate urban sophistication. World-class arts, dining, architecture, and cosmopolitan energy.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Urban</span>
+                        <span class="tag">Arts</span>
+                        <span class="tag">Cosmopolitan</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 7 -->
+            <article class="destination-card">
+                <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                     alt="Sydney" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Australia</span>
+                        <span class="destination-rating">9.1/10</span>
+                    </div>
+                    <h3>Sydney</h3>
+                    <p>Harbor-front sophistication meets coastal lifestyle. Iconic architecture and vibrant cultural scene.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Coastal</span>
+                        <span class="tag">Urban</span>
+                        <span class="tag">Modern</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 8 -->
+            <article class="destination-card">
+                <img src="images/capetown.jpg" alt="" class="destination-image"
+                     alt="Cape Town" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>South Africa</span>
+                        <span class="destination-rating">9.3/10</span>
+                    </div>
+                    <h3>Cape Town</h3>
+                    <p>Where mountain meets ocean. Sophisticated urban culture, world-class wine regions, and natural wonders.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Nature</span>
+                        <span class="tag">Wine</span>
+                        <span class="tag">Coastal</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 9 -->
+            <article class="destination-card">
+                <img src="https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                     alt="Rio de Janeiro" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Brazil</span>
+                        <span class="destination-rating">8.8/10</span>
+                    </div>
+                    <h3>Rio de Janeiro</h3>
+                    <p>Vibrant energy meets stunning natural beauty. Iconic beaches, rhythmic culture, and mountain vistas.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Beach</span>
+                        <span class="tag">Cultural</span>
+                        <span class="tag">Vibrant</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 10 -->
+            <article class="destination-card">
+                <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                     alt="Tokyo" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Japan</span>
+                        <span class="destination-rating">9.6/10</span>
+                    </div>
+                    <h3>Tokyo</h3>
+                    <p>Ultra-modern metropolis blending cutting-edge technology with deep traditional culture.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Modern</span>
+                        <span class="tag">Culinary</span>
+                        <span class="tag">Urban</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 11 -->
+            <article class="destination-card">
+                <img src="images/pexels-timo-volz-837240-3769312.jpg" alt="" class="destination-image"
+                     alt="Dubai" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>UAE</span>
+                        <span class="destination-rating">9.2/10</span>
+                    </div>
+                    <h3>Dubai</h3>
+                    <p>Ultra-luxury meets architectural marvels in the desert. Unparalleled luxury and futuristic design.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Luxury</span>
+                        <span class="tag">Modern</span>
+                        <span class="tag">Architectural</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 12 -->
+            <article class="destination-card">
+                <img src="images/pexels-nanamusic-31046584.jpg" alt="" class="destination-image"
+                     alt="Barcelona" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Spain</span>
+                        <span class="destination-rating">9.3/10</span>
+                    </div>
+                    <h3>Barcelona</h3>
+                    <p>Gaudi's architectural wonderland meets Mediterranean charm. Vibrant street life and artistic innovation.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Architectural</span>
+                        <span class="tag">Culinary</span>
+                        <span class="tag">Cultural</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 13 -->
+            <article class="destination-card">
+                <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                     alt="Santorini" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Greece</span>
+                        <span class="destination-rating">9.0/10</span>
+                    </div>
+                    <h3>Santorini</h3>
+                    <p>White-washed cliffs overlooking the Aegean Sea. Sophisticated island luxury with breathtaking sunsets.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Island</span>
+                        <span class="tag">Romantic</span>
+                        <span class="tag">Luxury</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 14 -->
+            <article class="destination-card">
+                <img src="images/pexels-georgemorina-4905523.jpg" alt="" class="destination-image"
+                     alt="London" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>UK</span>
+                        <span class="destination-rating">9.4/10</span>
+                    </div>
+                    <h3>London</h3>
+                    <p>Historic capital with contemporary sophistication. Royal heritage meets modern creativity and culture.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Historic</span>
+                        <span class="tag">Royal</span>
+                        <span class="tag">Cultural</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 15 -->
+            <article class="destination-card">
+                <img src="images/pexels-mehdi-el-marouazi-884979055-20700637.jpg" alt="" class="destination-image"
+                     alt="Marrakech" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Morocco</span>
+                        <span class="destination-rating">8.9/10</span>
+                    </div>
+                    <h3>Marrakech</h3>
+                    <p>Ancient medina meets sophisticated riads. Vibrant souks, ornate palaces, and desert luxury.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Desert</span>
+                        <span class="tag">Cultural</span>
+                        <span class="tag">Luxury</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 16 -->
+            <article class="destination-card">
+                <img src="images/pexels-axp-photography-500641970-29983706.jpg" alt="" class="destination-image"
+                     alt="Paris 2" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>France</span>
+                        <span class="destination-rating">9.7/10</span>
+                    </div>
+                    <h3>Provence</h3>
+                    <p>Lavender fields and historic villages. Sophisticated countryside living with world-class cuisine.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Countryside</span>
+                        <span class="tag">Culinary</span>
+                        <span class="tag">Romantic</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 17 -->
+            <article class="destination-card">
+                <img src="images/pexels-luke-lawreszuk-45053-29240328.jpg" alt="" class="destination-image"
+                     alt="Vancouver" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Canada</span>
+                        <span class="destination-rating">9.1/10</span>
+                    </div>
+                    <h3>Vancouver</h3>
+                    <p>Urban sophistication surrounded by dramatic natural beauty. Mountains, ocean, and cosmopolitan culture.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Nature</span>
+                        <span class="tag">Urban</span>
+                        <span class="tag">Modern</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 18 -->
+            <article class="destination-card">
+                <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                     alt="Singapore" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Singapore</span>
+                        <span class="destination-rating">9.5/10</span>
+                    </div>
+                    <h3>Singapore</h3>
+                    <p>Futuristic city-state with impeccable sophistication. Cutting-edge architecture and multicultural cuisine.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Modern</span>
+                        <span class="tag">Culinary</span>
+                        <span class="tag">Urban</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 19 -->
+            <article class="destination-card">
+                <img src="images/prague.jpg" alt="Prague" class="destination-image"
+                     alt="Prague" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Czech Republic</span>
+                        <span class="destination-rating">9.2/10</span>
+                    </div>
+                    <h3>Prague</h3>
+                    <p>Fairytale architecture meets sophisticated culture. Historic charm with vibrant contemporary arts.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Historic</span>
+                        <span class="tag">Architectural</span>
+                        <span class="tag">Cultural</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 20 -->
+            <article class="destination-card">
+                <img src="images/istanbul.jpg" alt="Istanbul" class="destination-image"
+                     alt="Istanbul" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Turkey</span>
+                        <span class="destination-rating">9.3/10</span>
+                    </div>
+                    <h3>Istanbul</h3>
+                    <p>Where East meets West. Ancient history, sophisticated cuisine, and architectural wonders spanning empires.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Historic</span>
+                        <span class="tag">Cultural</span>
+                        <span class="tag">Culinary</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 21 -->
+            <article class="destination-card">
+                <img src="images/seoul.jpg" alt="Seoul" class="destination-image"
+                     alt="Seoul" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>South Korea</span>
+                        <span class="destination-rating">9.4/10</span>
+                    </div>
+                    <h3>Seoul</h3>
+                    <p>High-tech metropolis with deep traditional roots. Cutting-edge innovation meets ancient palaces.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Modern</span>
+                        <span class="tag">Technology</span>
+                        <span class="tag">Cultural</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 22 -->
+            <article class="destination-card">
+                <img src="images/pexels-regan-dsouza-1315522347-32785300.jpg" alt="" class="destination-image"
+                     alt="Vienna" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Austria</span>
+                        <span class="destination-rating">9.3/10</span>
+                    </div>
+                    <h3>Vienna</h3>
+                    <p>Imperial elegance and musical heritage. Coffee house culture, classical music, and architectural grandeur.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Classical</span>
+                        <span class="tag">Architectural</span>
+                        <span class="tag">Cultural</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 23 -->
+            <article class="destination-card">
+                <img src="images/hong%20kong.jpg" alt="Hong Kong" class="destination-image"
+                     alt="Hong Kong" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>China</span>
+                        <span class="destination-rating">9.4/10</span>
+                    </div>
+                    <h3>Hong Kong</h3>
+                    <p>Vertical city with unparalleled energy. Sophisticated dining, stunning skyline, and East-meets-West culture.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Urban</span>
+                        <span class="tag">Culinary</span>
+                        <span class="tag">Modern</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 24 -->
+            <article class="destination-card">
+                <img src="images/Edinburgh.webp" alt="Edinburgh" class="destination-image"
+                     alt="Edinburgh" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Scotland</span>
+                        <span class="destination-rating">9.2/10</span>
+                    </div>
+                    <h3>Edinburgh</h3>
+                    <p>Medieval and Georgian architecture meets contemporary culture. Literary heritage and sophisticated charm.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Historic</span>
+                        <span class="tag">Literary</span>
+                        <span class="tag">Cultural</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 25 -->
+            <article class="destination-card">
+                <img src="images/pexels-lu-zhao-145486608-16786188.jpg" alt="" class="destination-image"
+                     alt="Bangkok" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Thailand</span>
+                        <span class="destination-rating">8.8/10</span>
+                    </div>
+                    <h3>Bangkok</h3>
+                    <p>Vibrant street life meets golden temples. Sophisticated cuisine and luxurious hospitality.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Cultural</span>
+                        <span class="tag">Culinary</span>
+                        <span class="tag">Vibrant</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 26 -->
+            <article class="destination-card">
+                <img src="images/pexels-bertellifotografia-19922974.jpg" alt="" class="destination-image"
+                     alt="Reykjavik" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Iceland</span>
+                        <span class="destination-rating">9.0/10</span>
+                    </div>
+                    <h3>Reykjavik</h3>
+                    <p>Nordic sophistication amid otherworldly landscapes. Geothermal wonders, minimalist design, and midnight sun.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Nature</span>
+                        <span class="tag">Nordic</span>
+                        <span class="tag">Adventure</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 27 -->
+            <article class="destination-card">
+                <img src="images/pexels-kokorevas-14678567.jpg" alt="" class="destination-image"
+                     alt="Lisbon" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Portugal</span>
+                        <span class="destination-rating">9.1/10</span>
+                    </div>
+                    <h3>Lisbon</h3>
+                    <p>Sun-drenched hills with historic charm. Fado music, sophisticated cuisine, and breathtaking viewpoints.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Coastal</span>
+                        <span class="tag">Cultural</span>
+                        <span class="tag">Historic</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 28 -->
+            <article class="destination-card">
+                <img src="images/pexels-viviana-ceballos-1480481-2864805.jpg"
+                     alt="Berlin" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Germany</span>
+                        <span class="destination-rating">9.2/10</span>
+                    </div>
+                    <h3>Berlin</h3>
+                    <p>Creative capital with historical depth. Cutting-edge art, sophisticated nightlife, and contemporary culture.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Creative</span>
+                        <span class="tag">Historical</span>
+                        <span class="tag">Urban</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 29 -->
+            <article class="destination-card">
+                <img src="images/Hanoi.webp" alt="Hanoi" class="destination-image"
+                     alt="Hanoi" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>Vietnam</span>
+                        <span class="destination-rating">8.9/10</span>
+                    </div>
+                    <h3>Hanoi</h3>
+                    <p>Ancient charm meets French colonial elegance. Sophisticated street food and cultural heritage.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Cultural</span>
+                        <span class="tag">Culinary</span>
+                        <span class="tag">Historic</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination 30 -->
+            <article class="destination-card">
+                <img src="images/pexels-ken-cheung-3355734-7918293.jpg"
+                     alt="Queenstown" class="destination-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span>New Zealand</span>
+                        <span class="destination-rating">9.3/10</span>
+                    </div>
+                    <h3>Queenstown</h3>
+                    <p>Adventure capital with stunning alpine scenery. Sophisticated wine region and outdoor pursuits.</p>
+                    <div class="destination-tags">
+                        <span class="tag">Adventure</span>
+                        <span class="tag">Nature</span>
+                        <span class="tag">Wine</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Map Visualization -->
+    <section class="container">
+        <div class="map-container">
+            <div class="map-overlay">
+                <h4>Global Coverage</h4>
+                <p>Our destination portfolio spans six continents, with each location carefully selected for its unique character and sophisticated appeal.</p>
+                <div class="destination-tags" style="margin-top: 1rem;">
+                    <span class="tag">30 Destinations</span>
+                    <span class="tag">24 Countries</span>
+                    <span class="tag">6 Continents</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Table -->
+    <section class="container">
+        <h2 class="section-title">Destination Analysis</h2>
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>Destination</th>
+                <th>Country</th>
+                <th>Cultural Depth</th>
+                <th>Sustainability</th>
+                <th>Infrastructure</th>
+                <th>Recommended Duration</th>
+                <th>Ideal Season</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td><strong>Kyoto</strong></td><td>Japan</td><td>Exceptional</td><td>9.5/10</td><td>Excellent</td><td>5-7 days</td><td>Spring, Autumn</td></tr>
+            <tr><td><strong>Swiss Alps</strong></td><td>Switzerland</td><td>Moderate</td><td>9.8/10</td><td>Superior</td><td>7-10 days</td><td>Winter, Summer</td></tr>
+            <tr><td><strong>Amalfi Coast</strong></td><td>Italy</td><td>High</td><td>8.5/10</td><td>Good</td><td>4-6 days</td><td>Spring, Early Autumn</td></tr>
+            <tr><td><strong>Paris</strong></td><td>France</td><td>Exceptional</td><td>8.8/10</td><td>Excellent</td><td>4-5 days</td><td>Spring, Autumn</td></tr>
+            <tr><td><strong>Bali</strong></td><td>Indonesia</td><td>High</td><td>8.2/10</td><td>Good</td><td>7-10 days</td><td>Dry Season (Apr-Oct)</td></tr>
+            <tr><td><strong>New York</strong></td><td>USA</td><td>High</td><td>8.0/10</td><td>Excellent</td><td>4-6 days</td><td>Spring, Autumn</td></tr>
+            <tr><td><strong>Sydney</strong></td><td>Australia</td><td>High</td><td>8.5/10</td><td>Excellent</td><td>5-7 days</td><td>Spring, Autumn</td></tr>
+            <tr><td><strong>Cape Town</strong></td><td>South Africa</td><td>High</td><td>8.7/10</td><td>Good</td><td>5-8 days</td><td>Summer (Nov-Feb)</td></tr>
+            <tr><td><strong>Rio de Janeiro</strong></td><td>Brazil</td><td>High</td><td>8.0/10</td><td>Good</td><td>4-6 days</td><td>Summer (Dec-Mar)</td></tr>
+            <tr><td><strong>Tokyo</strong></td><td>Japan</td><td>Exceptional</td><td>9.2/10</td><td>Superior</td><td>5-7 days</td><td>Spring, Autumn</td></tr>
+            <tr><td><strong>Dubai</strong></td><td>UAE</td><td>Moderate</td><td>7.5/10</td><td>Superior</td><td>3-5 days</td><td>Winter (Nov-Mar)</td></tr>
+            <tr><td><strong>Barcelona</strong></td><td>Spain</td><td>High</td><td>8.8/10</td><td>Excellent</td><td>3-5 days</td><td>Spring, Early Autumn</td></tr>
+            <tr><td><strong>Santorini</strong></td><td>Greece</td><td>High</td><td>8.0/10</td><td>Good</td><td>3-5 days</td><td>Late Spring, Early Autumn</td></tr>
+            <tr><td><strong>London</strong></td><td>UK</td><td>Exceptional</td><td>8.9/10</td><td>Excellent</td><td>4-6 days</td><td>Spring, Summer</td></tr>
+            <tr><td><strong>Marrakech</strong></td><td>Morocco</td><td>High</td><td>8.0/10</td><td>Good</td><td>3-5 days</td><td>Autumn, Spring</td></tr>
+            <tr><td><strong>Provence</strong></td><td>France</td><td>High</td><td>8.7/10</td><td>Good</td><td>5-7 days</td><td>Summer</td></tr>
+            <tr><td><strong>Vancouver</strong></td><td>Canada</td><td>Moderate</td><td>9.0/10</td><td>Excellent</td><td>4-6 days</td><td>Summer</td></tr>
+            <tr><td><strong>Singapore</strong></td><td>Singapore</td><td>High</td><td>9.5/10</td><td>Superior</td><td>3-5 days</td><td>Year-round</td></tr>
+            <tr><td><strong>Prague</strong></td><td>Czech Republic</td><td>Exceptional</td><td>8.5/10</td><td>Excellent</td><td>3-4 days</td><td>Spring, Autumn</td></tr>
+            <tr><td><strong>Istanbul</strong></td><td>Turkey</td><td>Exceptional</td><td>8.2/10</td><td>Good</td><td>4-5 days</td><td>Spring, Autumn</td></tr>
+            <tr><td><strong>Seoul</strong></td><td>South Korea</td><td>High</td><td>8.8/10</td><td>Excellent</td><td>4-6 days</td><td>Spring, Autumn</td></tr>
+            <tr><td><strong>Vienna</strong></td><td>Austria</td><td>Exceptional</td><td>9.0/10</td><td>Excellent</td><td>3-4 days</td><td>Spring, Autumn</td></tr>
+            <tr><td><strong>Hong Kong</strong></td><td>China</td><td>High</td><td>8.5/10</td><td>Superior</td><td>3-4 days</td><td>Autumn, Winter</td></tr>
+            <tr><td><strong>Edinburgh</strong></td><td>Scotland</td><td>High</td><td>8.8/10</td><td>Good</td><td>3-4 days</td><td>Summer</td></tr>
+            <tr><td><strong>Bangkok</strong></td><td>Thailand</td><td>High</td><td>7.8/10</td><td>Good</td><td>3-4 days</td><td>Winter (Nov-Feb)</td></tr>
+            <tr><td><strong>Reykjavik</strong></td><td>Iceland</td><td>Moderate</td><td>9.2/10</td><td>Good</td><td>4-6 days</td><td>Summer</td></tr>
+            <tr><td><strong>Lisbon</strong></td><td>Portugal</td><td>High</td><td>8.7/10</td><td>Good</td><td>3-4 days</td><td>Spring, Autumn</td></tr>
+            <tr><td><strong>Berlin</strong></td><td>Germany</td><td>High</td><td>9.0/10</td><td>Excellent</td><td>3-4 days</td><td>Summer</td></tr>
+            <tr><td><strong>Hanoi</strong></td><td>Vietnam</td><td>High</td><td>8.0/10</td><td>Good</td><td>3-4 days</td><td>Autumn, Spring</td></tr>
+            <tr><td><strong>Queenstown</strong></td><td>New Zealand</td><td>Moderate</td><td>9.3/10</td><td>Good</td><td>4-6 days</td><td>Summer (Dec-Feb)</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Action Buttons -->
+    <div class="container">
+        <div class="button-group">
+            <button onclick="scrollToTop()" class="btn btn-primary">
+                <i class="fas fa-arrow-up"></i> Return to Top
+            </button>
+
+            <a href="mailto:professional@voyagecurated.com" class="btn btn-secondary">
+                <i class="fas fa-envelope"></i> Contact Us
+            </a>
+
+            <a href="picker.html" class="btn btn-primary">
+                <i class="fas fa-compass"></i> Find Your Match
+            </a>
+
+            <a href="index.html" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-content">
+        <!-- ASCII Art -->
+        <div class="ascii-art">
+            __     ___            _
+            \ \   / (_) _____   _(_) __ _  __ _  ___
+            \ \ / /| |/ _ \ \ / / |/ _` |/ _` |/ _ \
+            \ V / | |  __/\ V /| | (_| | (_| | (_) |
+            \_/  |_|\___| \_/ |_|\__,_|\__, |\___/
+            |___/
+        </div>
+
+        <p class="copyright">© 2026 Voyage Curated. All rights reserved. | Sophisticated Travel Discovery</p>
+    </div>
+</footer>
+
+<script>
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Destination card interactions
+    document.querySelectorAll('.destination-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const destination = this.querySelector('h3').textContent;
+            console.log('Selected destination:', destination);
+        });
+    });
+</script>
+</body>
+</html>

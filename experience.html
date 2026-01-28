@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiences | Voyage Curated</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Experiences page specific styles */
+        .experiences-hero {
+            padding: 6rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .experience-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        }
+
+        .category-tab:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .category-tab.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .experience-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .experience-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .experience-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .experience-content {
+            padding: 2rem;
+        }
+
+        .experience-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+            letter-spacing: 0.05em;
+        }
+
+        .experience-location {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .experience-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .experience-tag {
+            background: #f0f0f0;
+            color: var(--text-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .experience-duration {
+            display: inline-block;
+            margin-right: 1rem;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        .experience-price {
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .testimonial-text::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -0.5rem;
+            font-size: 2rem;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--border);
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            margin: 0;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .experience-form {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 3rem;
+            max-width: 600px;
+            margin: 4rem auto;
+        }
+
+        @media (max-width: 768px) {
+            .experience-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-form {
+                padding: 2rem;
+                margin: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header without Profile Photo -->
+<header class="site-header">
+    <div class="header-content">
+        <h1 class="site-title">Curated Experiences</h1>
+        <p class="tagline">Meticulously selected experiences that offer depth, authenticity, and sophisticated engagement with each destination.</p>
+    </div>
+</header>
+
+<!-- Minimalist Navigation -->
+<nav class="site-nav">
+    <div class="nav-container">
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="destinations.html" class="nav-link">Destinations</a></li>
+            <li><a href="picker.html" class="nav-link">Destination Picker</a></li>
+            <li><a href="experience.html" class="nav-link active">Experiences</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- QR Code -->
+<div class="qr-container">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://github.com/yourusername/voyage-curated"
+         alt="GitHub Repository" class="qr-code">
+    <div class="qr-label">GitHub Source</div>
+</div>
+
+<!-- Experiences Hero -->
+<main>
+    <section class="experiences-hero">
+        <div class="container">
+            <h2>Sophisticated Travel Experiences</h2>
+            <p>Our curated experiences are designed for travelers seeking depth, authenticity, and meaningful engagement with each destination.</p>
+
+            <!-- Experience Categories -->
+            <div class="experience-categories">
+                <div class="category-tab active" data-category="all">All Experiences</div>
+                <div class="category-tab" data-category="cultural">Cultural</div>
+                <div class="category-tab" data-category="culinary">Culinary</div>
+                <div class="category-tab" data-category="wellness">Wellness</div>
+                <div class="category-tab" data-category="adventure">Adventure</div>
+                <div class="category-tab" data-category="art">Art & Design</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiences Grid -->
+    <section class="container">
+        <div class="experience-grid">
+            <!-- Experience 1 -->
+            <article class="experience-card" data-categories="cultural,art">
+                <div class="experience-badge">Cultural</div>
+                <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                     alt="Tea Ceremony" class="experience-image">
+                <div class="experience-content">
+                    <div class="experience-meta">
+                        <span class="experience-location">Kyoto, Japan</span>
+                        <span>9.8/10</span>
+                    </div>
+                    <h3>Private Tea Ceremony with Master</h3>
+                    <p>Experience the refined art of Japanese tea ceremony in an intimate setting with a fifth-generation tea master. Learn the philosophy and practice of this centuries-old tradition.</p>
+                    <div class="experience-tags">
+                        <span class="experience-tag">Traditional</span>
+                        <span class="experience-tag">Intimate</span>
+                        <span class="experience-tag">Educational</span>
+                    </div>
+                    <div>
+                        <span class="experience-duration">2.5 hours</span>
+                        <span class="experience-price">From $150 per person</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Experience 2 -->
+            <article class="experience-card" data-categories="culinary">
+                <div class="experience-badge">Culinary</div>
+                <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                     alt="Market Tour" class="experience-image">
+                <div class="experience-content">
+                    <div class="experience-meta">
+                        <span class="experience-location">Florence, Italy</span>
+                        <span>9.5/10</span>
+                    </div>
+                    <h3>Market Tour & Cooking Class</h3>
+                    <p>Join a local chef for a tour of Florence's historic markets, followed by a hands-on cooking class focusing on traditional Tuscan cuisine. Conclude with a meal of your creations.</p>
+                    <div class="experience-tags">
+                        <span class="experience-tag">Hands-On</span>
+                        <span class="experience-tag">Local Market</span>
+                        <span class="experience-tag">Tuscan Cuisine</span>
+                    </div>
+                    <div>
+                        <span class="experience-duration">4 hours</span>
+                        <span class="experience-price">From $120 per person</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Experience 3 -->
+            <article class="experience-card" data-categories="adventure,wellness">
+                <div class="experience-badge">Adventure</div>
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                     alt="Alpine Hike" class="experience-image">
+                <div class="destination-content">
+                    <div class="destination-meta">
+                        <span class="experience-location">Swiss Alps</span>
+                        <span>9.7/10</span>
+                    </div>
+                    <h3>Guided Alpine Meditation Hike</h3>
+                    <p>Combine physical activity with mindfulness on a guided hike through pristine alpine landscapes. Includes meditation sessions at scenic viewpoints and a gourmet mountain picnic.</p>
+                    <div class="destination-tags">
+                        <span class="experience-tag">Mindfulness</span>
+                        <span class="experience-tag">Nature</span>
+                        <span class="experience-tag">Gourmet</span>
+                    </div>
+                    <div>
+                        <span class="experience-duration">6 hours</span>
+                        <span class="experience-price">From $200 per person</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Experience Table -->
+    <section class="container">
+        <h2 class="section-title">Experience Analysis</h2>
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>Experience</th>
+                <th>Location</th>
+                <th>Category</th>
+                <th>Duration</th>
+                <th>Group Size</th>
+                <th>Sophistication Level</th>
+                <th>Cultural Depth</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Private Tea Ceremony</strong></td>
+                <td>Kyoto, Japan</td>
+                <td>Cultural</td>
+                <td>2.5 hours</td>
+                <td>1-4 people</td>
+                <td>Exceptional</td>
+                <td>Deep</td>
+            </tr>
+            <tr>
+                <td><strong>Market Tour & Cooking</strong></td>
+                <td>Florence, Italy</td>
+                <td>Culinary</td>
+                <td>4 hours</td>
+                <td>2-6 people</td>
+                <td>High</td>
+                <td>Moderate</td>
+            </tr>
+            <tr>
+                <td><strong>Alpine Meditation Hike</strong></td>
+                <td>Swiss Alps</td>
+                <td>Adventure/Wellness</td>
+                <td>6 hours</td>
+                <td>1-8 people</td>
+                <td>High</td>
+                <td>Light</td>
+            </tr>
+            <tr>
+                <td><strong>Private Museum Tour</strong></td>
+                <td>Paris, France</td>
+                <td>Art & Design</td>
+                <td>3 hours</td>
+                <td>1-4 people</td>
+                <td>Exceptional</td>
+                <td>Deep</td>
+            </tr>
+            <tr>
+                <td><strong>Wine Tasting & Vineyard Tour</strong></td>
+                <td>Napa Valley, USA</td>
+                <td>Culinary</td>
+                <td>5 hours</td>
+                <td>2-8 people</td>
+                <td>High</td>
+                <td>Moderate</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="container">
+        <h2 class="section-title">Traveler Experiences</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    The tea ceremony experience in Kyoto was transformative. It wasn't just about drinking tea—it was a lesson in mindfulness, tradition, and Japanese aesthetics.
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b786d4d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80"
+                         alt="Sarah Chen" class="author-avatar">
+                    <div class="author-info">
+                        <h4>Sarah Chen</h4>
+                        <p>Kyoto, 2025</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    Our cooking class in Florence gave us more than recipes—it gave us insight into Italian culture, family traditions, and the importance of quality ingredients.
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80"
+                         alt="Marco Rossi" class="author-avatar">
+                    <div class="author-info">
+                        <h4>Marco Rossi</h4>
+                        <p>Florence, 2025</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    The alpine meditation hike was the perfect combination of physical activity and mental rejuvenation. The guided meditation at the summit was truly breathtaking.
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80"
+                         alt="Anna Schmidt" class="author-avatar">
+                    <div class="author-info">
+                        <h4>Anna Schmidt</h4>
+                        <p>Swiss Alps, 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Inquiry Form -->
+    <section class="container">
+        <div class="experience-form">
+            <h3 style="text-align: center; margin-bottom: 2rem;">Inquire About Experiences</h3>
+            <form id="experience-inquiry">
+                <div class="form-group">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" id="name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="destination" class="form-label">Destination of Interest</label>
+                    <select id="destination" class="form-control" required>
+                        <option value="">Select a destination</option>
+                        <option value="kyoto">Kyoto, Japan</option>
+                        <option value="florence">Florence, Italy</option>
+                        <option value="alps">Swiss Alps</option>
+                        <option value="paris">Paris, France</option>
+                        <option value="napa">Napa Valley, USA</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="experience" class="form-label">Experience Interest</label>
+                    <select id="experience" class="form-control" required>
+                        <option value="">Select an experience type</option>
+                        <option value="cultural">Cultural Immersion</option>
+                        <option value="culinary">Culinary Experiences</option>
+                        <option value="wellness">Wellness & Meditation</option>
+                        <option value="adventure">Adventure Activities</option>
+                        <option value="art">Art & Design</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="form-label">Additional Information</label>
+                    <textarea id="message" class="form-control" rows="4" placeholder="Tell us about your interests, group size, and any special requirements..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i> Submit Inquiry
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Action Buttons -->
+    <div class="container">
+        <div class="button-group">
+            <button onclick="scrollToTop()" class="btn btn-primary">
+                <i class="fas fa-arrow-up"></i> Return to Top
+            </button>
+
+            <a href="mailto:professional@voyagecurated.com" class="btn btn-secondary">
+                <i class="fas fa-envelope"></i> Contact Us
+            </a>
+
+            <a href="picker.html" class="btn btn-primary">
+                <i class="fas fa-compass"></i> Find Experiences
+            </a>
+
+            <a href="index.html" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-content">
+        <!-- ASCII Art -->
+        <div class="ascii-art">
+            __     ___            _
+            \ \   / (_) _____   _(_) __ _  __ _  ___
+            \ \ / /| |/ _ \ \ / / |/ _` |/ _` |/ _ \
+            \ V / | |  __/\ V /| | (_| | (_| | (_) |
+            \_/  |_|\___| \_/ |_|\__,_|\__, |\___/
+            |___/
+        </div>
+
+        <p class="copyright">© 2026 Voyage Curated. All rights reserved. | Sophisticated Travel Discovery</p>
+    </div>
+</footer>
+
+<script>
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Category filtering
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    const experienceCards = document.querySelectorAll('.experience-card');
+
+    categoryTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
+
+            // Update active tab
+            categoryTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            // Filter experiences
+            experienceCards.forEach(card => {
+                const categories = card.getAttribute('data-categories').split(',');
+
+                if (category === 'all' || categories.includes(category)) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 10);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    });
+
+    // Experience card interactions
+    experienceCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const image = this.querySelector('.experience-image');
+            if (image) {
+                image.style.transform = 'scale(1.05)';
+                image.style.transition = 'transform 0.5s ease';
+            }
+        });
+
+        card.addEventListener('mouseleave', function() {
+            const image = this.querySelector('.experience-image');
+            if (image) {
+                image.style.transform = 'scale(1)';
+            }
+        });
+
+        card.addEventListener('click', function() {
+            const title = this.querySelector('h3').textContent;
+            const location = this.querySelector('.experience-location').textContent;
+            console.log(`Selected experience: ${title} in ${location}`);
+            // In a real implementation, this would open a detailed view
+        });
+    });
+
+    // Form submission
+    document.getElementById('experience-inquiry').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const destination = document.getElementById('destination').value;
+        const experience = document.getElementById('experience').value;
+
+        console.log('Experience inquiry submitted:', { name, email, destination, experience });
+
+        // Show success message
+        alert(`Thank you for your inquiry, ${name}. We will contact you at ${email} within 24 hours to discuss ${experience} experiences in ${destination}.`);
+
+        // Reset form
+        this.reset();
+    });
+</script>
+</body>
+</html>

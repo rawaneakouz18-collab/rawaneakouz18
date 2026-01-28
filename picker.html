@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destination Picker | Voyage Curated</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Picker page specific styles */
+        .picker-hero {
+            padding: 6rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .progress-indicator {
+            margin: 3rem auto;
+            max-width: 600px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--border);
+            z-index: 1;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 20%;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-number {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .step.active .step-label {
+            color: var(--accent);
+        }
+
+        .picker-container {
+            max-width: 800px;
+            margin: 4rem auto;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .question-container {
+            padding: 3rem;
+            display: none;
+        }
+
+        .question-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question {
+            margin-bottom: 2rem;
+        }
+
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .option-card {
+            padding: 1.5rem;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .option-card.selected {
+            border-color: var(--accent);
+            background: rgba(109, 140, 138, 0.05);
+        }
+
+        .option-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .result-container {
+            display: none;
+            padding: 3rem;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 3rem;
+            margin: 2rem 0;
+        }
+
+        .match-score {
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--accent);
+            margin: 1rem 0;
+        }
+
+        .match-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .match-detail {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .picker-container {
+                margin: 2rem 1rem;
+            }
+
+            .question-container {
+                padding: 2rem;
+            }
+
+            .option-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .match-details {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .navigation-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header without Profile Photo -->
+<header class="site-header">
+    <div class="header-content">
+        <h1 class="site-title">Destination Matchmaker</h1>
+        <p class="tagline">Our sophisticated algorithm matches your preferences with meticulously curated destinations for the perfect travel experience.</p>
+    </div>
+</header>
+
+<!-- Minimalist Navigation -->
+<nav class="site-nav">
+    <div class="nav-container">
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="destinations.html" class="nav-link">Destinations</a></li>
+            <li><a href="picker.html" class="nav-link active">Destination Picker</a></li>
+            <li><a href="experience.html" class="nav-link">Experiences</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- QR Code -->
+<div class="qr-container">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://github.com/yourusername/voyage-curated"
+         alt="GitHub Repository" class="qr-code">
+    <div class="qr-label">GitHub Source</div>
+</div>
+
+<!-- Picker Hero -->
+<main>
+    <section class="picker-hero">
+        <div class="container">
+            <h2>Find Your Perfect Destination</h2>
+            <p>Answer five questions to discover destinations that match your travel style and preferences.</p>
+
+            <!-- Progress Indicator -->
+            <div class="progress-indicator">
+                <div class="progress-steps">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Budget</div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Style</div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Season</div>
+                    </div>
+                    <div class="step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-label">Duration</div>
+                    </div>
+                    <div class="step" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-label">Experience</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Picker Container -->
+    <section class="container">
+        <div class="picker-container">
+            <!-- Question 1: Budget -->
+            <div class="question-container active" id="question-1">
+                <div class="question">
+                    <h3>What is your approximate daily budget per person?</h3>
+                    <p>This helps us match you with destinations that fit your financial comfort zone.</p>
+                </div>
+
+                <div class="option-grid">
+                    <div class="option-card" data-value="economy">
+                        <div class="option-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <h4>Economy</h4>
+                        <p>$50 - $150 per day</p>
+                    </div>
+
+                    <div class="option-card" data-value="comfort">
+                        <div class="option-icon">
+                            <i class="fas fa-suitcase"></i>
+                        </div>
+                        <h4>Comfort</h4>
+                        <p>$150 - $300 per day</p>
+                    </div>
+
+                    <div class="option-card" data-value="luxury">
+                        <div class="option-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h4>Luxury</h4>
+                        <p>$300+ per day</p>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" disabled>Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion(1)">Next Question</button>
+                </div>
+            </div>
+
+            <!-- Question 2: Travel Style -->
+            <div class="question-container" id="question-2">
+                <div class="question">
+                    <h3>What is your preferred travel style?</h3>
+                    <p>Choose the approach that best describes how you like to experience destinations.</p>
+                </div>
+
+                <div class="option-grid">
+                    <div class="option-card" data-value="cultural">
+                        <div class="option-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <h4>Cultural Immersion</h4>
+                        <p>Focus on history, art, and local traditions</p>
+                    </div>
+
+                    <div class="option-card" data-value="relaxation">
+                        <div class="option-icon">
+                            <i class="fas fa-spa"></i>
+                        </div>
+                        <h4>Relaxation & Wellness</h4>
+                        <p>Spas, beaches, and rejuvenation</p>
+                    </div>
+
+                    <div class="option-card" data-value="adventure">
+                        <div class="option-icon">
+                            <i class="fas fa-hiking"></i>
+                        </div>
+                        <h4>Adventure & Nature</h4>
+                        <p>Outdoor activities and natural wonders</p>
+                    </div>
+
+                    <div class="option-card" data-value="urban">
+                        <div class="option-icon">
+                            <i class="fas fa-city"></i>
+                        </div>
+                        <h4>Urban Exploration</h4>
+                        <p>City life, dining, and modern culture</p>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion(2)">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion(2)">Next Question</button>
+                </div>
+            </div>
+
+            <!-- Question 3: Season -->
+            <div class="question-container" id="question-3">
+                <div class="question">
+                    <h3>When do you plan to travel?</h3>
+                    <p>Select your preferred travel season for optimal weather and experiences.</p>
+                </div>
+
+                <div class="option-grid">
+                    <div class="option-card" data-value="spring">
+                        <div class="option-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h4>Spring</h4>
+                        <p>March - May</p>
+                    </div>
+
+                    <div class="option-card" data-value="summer">
+                        <div class="option-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <h4>Summer</h4>
+                        <p>June - August</p>
+                    </div>
+
+                    <div class="option-card" data-value="autumn">
+                        <div class="option-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h4>Autumn</h4>
+                        <p>September - November</p>
+                    </div>
+
+                    <div class="option-card" data-value="winter">
+                        <div class="option-icon">
+                            <i class="fas fa-snowflake"></i>
+                        </div>
+                        <h4>Winter</h4>
+                        <p>December - February</p>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion(3)">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion(3)">Next Question</button>
+                </div>
+            </div>
+
+            <!-- Question 4: Duration -->
+            <div class="question-container" id="question-4">
+                <div class="question">
+                    <h3>What is your preferred trip duration?</h3>
+                    <p>How long do you typically like to stay in a destination?</p>
+                </div>
+
+                <div class="option-grid">
+                    <div class="option-card" data-value="short">
+                        <div class="option-icon">
+                            <i class="fas fa-weekend"></i>
+                        </div>
+                        <h4>Weekend Getaway</h4>
+                        <p>2-4 days</p>
+                    </div>
+
+                    <div class="option-card" data-value="medium">
+                        <div class="option-icon">
+                            <i class="fas fa-calendar-week"></i>
+                        </div>
+                        <h4>Week-Long Escape</h4>
+                        <p>5-7 days</p>
+                    </div>
+
+                    <div class="option-card" data-value="long">
+                        <div class="option-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h4>Extended Journey</h4>
+                        <p>8+ days</p>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion(4)">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion(4)">Next Question</button>
+                </div>
+            </div>
+
+            <!-- Question 5: Experience -->
+            <div class="question-container" id="question-5">
+                <div class="question">
+                    <h3>What type of experience are you seeking?</h3>
+                    <p>Choose the atmosphere that best matches your travel goals.</p>
+                </div>
+
+                <div class="option-grid">
+                    <div class="option-card" data-value="peaceful">
+                        <div class="option-icon">
+                            <i class="fas fa-peace"></i>
+                        </div>
+                        <h4>Peaceful & Reflective</h4>
+                        <p>Tranquil settings for contemplation</p>
+                    </div>
+
+                    <div class="option-card" data-value="social">
+                        <div class="option-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Social & Vibrant</h4>
+                        <p>Engaging with people and local life</p>
+                    </div>
+
+                    <div class="option-card" data-value="romantic">
+                        <div class="option-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4>Romantic & Intimate</h4>
+                        <p>Special moments with a partner</p>
+                    </div>
+
+                    <div class="option-card" data-value="educational">
+                        <div class="option-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4>Educational & Enriching</h4>
+                        <p>Learning and personal growth</p>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion(5)">Previous</button>
+                    <button class="btn btn-primary" onclick="showResults()">See Results</button>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="result-container" id="results">
+                <h3>Your Perfect Match</h3>
+                <p>Based on your preferences, we recommend:</p>
+
+                <div class="result-card">
+                    <h2 id="result-destination">Kyoto, Japan</h2>
+                    <div class="match-score" id="match-score">94% Match</div>
+                    <p id="result-description">Ancient capital offering sophisticated cultural immersion with exceptional historical depth and refined experiences.</p>
+
+                    <div class="match-details">
+                        <div class="match-detail">
+                            <h4>Best For</h4>
+                            <p id="detail-best-for">Cultural Immersion</p>
+                        </div>
+                        <div class="match-detail">
+                            <h4>Ideal Season</h4>
+                            <p id="detail-season">Spring & Autumn</p>
+                        </div>
+                        <div class="match-detail">
+                            <h4>Budget Fit</h4>
+                            <p id="detail-budget">Comfort</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem;">
+                        <button class="btn btn-primary" onclick="startOver()">
+                            <i class="fas fa-redo"></i> Start Over
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Action Buttons -->
+    <div class="container">
+        <div class="button-group">
+            <button onclick="scrollToTop()" class="btn btn-primary">
+                <i class="fas fa-arrow-up"></i> Return to Top
+            </button>
+
+            <a href="mailto:professional@voyagecurated.com" class="btn btn-secondary">
+                <i class="fas fa-envelope"></i> Contact Us
+            </a>
+
+            <a href="destinations.html" class="btn btn-primary">
+                <i class="fas fa-globe"></i> Browse Destinations
+            </a>
+
+            <a href="index.html" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-content">
+        <!-- ASCII Art -->
+        <div class="ascii-art">
+            __     ___            _
+            \ \   / (_) _____   _(_) __ _  __ _  ___
+            \ \ / /| |/ _ \ \ / / |/ _` |/ _` |/ _ \
+            \ V / | |  __/\ V /| | (_| | (_| | (_) |
+            \_/  |_|\___| \_/ |_|\__,_|\__, |\___/
+            |___/
+        </div>
+
+        <p class="copyright">© 2026 Voyage Curated. All rights reserved. | Sophisticated Travel Discovery</p>
+    </div>
+</footer>
+
+<script>
+    // User responses storage
+    const userResponses = {
+        budget: null,
+        style: null,
+        season: null,
+        duration: null,
+        experience: null
+    };
+
+    // Destination matching database
+    const destinations = [
+        {
+            name: "Kyoto, Japan",
+            match: 94,
+            description: "Ancient capital offering sophisticated cultural immersion with exceptional historical depth and refined experiences.",
+            bestFor: "Cultural Immersion",
+            season: "Spring & Autumn",
+            budget: "Comfort",
+            tags: ["cultural", "spring", "autumn", "comfort", "peaceful", "educational"]
+        },
+        {
+            name: "Swiss Alps, Switzerland",
+            match: 88,
+            description: "Pristine alpine landscapes with world-class luxury accommodations and sophisticated mountain experiences.",
+            bestFor: "Adventure & Nature",
+            season: "Winter & Summer",
+            budget: "Luxury",
+            tags: ["adventure", "winter", "summer", "luxury", "peaceful"]
+        },
+        {
+            name: "Amalfi Coast, Italy",
+            match: 85,
+            description: "Dramatic Mediterranean coastline with sophisticated seaside villages and exceptional culinary experiences.",
+            bestFor: "Relaxation & Wellness",
+            season: "Spring & Early Autumn",
+            budget: "Luxury",
+            tags: ["relaxation", "spring", "autumn", "luxury", "romantic"]
+        }
+    ];
+
+    // Navigation functions
+    let currentQuestion = 1;
+
+    function nextQuestion(current) {
+        if (current === 5) return;
+
+        // Save response from current question
+        saveResponse(current);
+
+        // Hide current question
+        document.getElementById(`question-${current}`).classList.remove('active');
+
+        // Update progress indicator
+        document.querySelector(`.step[data-step="${current}"]`).classList.remove('active');
+
+        // Show next question
+        currentQuestion = current + 1;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        document.querySelector(`.step[data-step="${currentQuestion}"]`).classList.add('active');
+    }
+
+    function previousQuestion(current) {
+        if (current === 1) return;
+
+        // Hide current question
+        document.getElementById(`question-${current}`).classList.remove('active');
+
+        // Update progress indicator
+        document.querySelector(`.step[data-step="${current}"]`).classList.remove('active');
+
+        // Show previous question
+        currentQuestion = current - 1;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        document.querySelector(`.step[data-step="${currentQuestion}"]`).classList.add('active');
+    }
+
+    function saveResponse(questionNumber) {
+        const activeCard = document.querySelector(`#question-${questionNumber} .option-card.selected`);
+        if (activeCard) {
+            const value = activeCard.getAttribute('data-value');
+            switch(questionNumber) {
+                case 1: userResponses.budget = value; break;
+                case 2: userResponses.style = value; break;
+                case 3: userResponses.season = value; break;
+                case 4: userResponses.duration = value; break;
+                case 5: userResponses.experience = value; break;
+            }
+        }
+    }
+
+    function showResults() {
+        saveResponse(5);
+
+        // Hide last question
+        document.getElementById(`question-5`).classList.remove('active');
+        document.querySelector(`.step[data-step="5"]`).classList.add('active');
+
+        // Show results
+        document.getElementById('results').style.display = 'block';
+
+        // Calculate best match
+        const bestMatch = findBestMatch();
+
+        // Display results
+        document.getElementById('result-destination').textContent = bestMatch.name;
+        document.getElementById('match-score').textContent = `${bestMatch.match}% Match`;
+        document.getElementById('result-description').textContent = bestMatch.description;
+        document.getElementById('detail-best-for').textContent = bestMatch.bestFor;
+        document.getElementById('detail-season').textContent = bestMatch.season;
+        document.getElementById('detail-budget').textContent = bestMatch.budget;
+    }
+
+    function findBestMatch() {
+        // Simple matching algorithm
+        let bestMatch = destinations[0];
+        let highestScore = 0;
+
+        destinations.forEach(destination => {
+            let score = 0;
+
+            // Budget match
+            if (userResponses.budget === destination.tags.find(tag => ['economy', 'comfort', 'luxury'].includes(tag))) {
+                score += 25;
+            }
+
+            // Style match
+            if (userResponses.style && destination.tags.includes(userResponses.style)) {
+                score += 25;
+            }
+
+            // Season match
+            if (userResponses.season && destination.tags.includes(userResponses.season)) {
+                score += 25;
+            }
+
+            // Experience match
+            if (userResponses.experience && destination.tags.includes(userResponses.experience)) {
+                score += 25;
+            }
+
+            if (score > highestScore) {
+                highestScore = score;
+                bestMatch = { ...destination, match: Math.min(99, score) };
+            }
+        });
+
+        return bestMatch;
+    }
+
+    function startOver() {
+        // Reset responses
+        Object.keys(userResponses).forEach(key => {
+            userResponses[key] = null;
+        });
+
+        // Hide results
+        document.getElementById('results').style.display = 'none';
+
+        // Reset progress indicator
+        document.querySelectorAll('.step').forEach(step => {
+            step.classList.remove('active');
+        });
+
+        // Show first question
+        currentQuestion = 1;
+        document.querySelector(`.step[data-step="1"]`).classList.add('active');
+        document.getElementById('question-1').classList.add('active');
+
+        // Clear selections
+        document.querySelectorAll('.option-card.selected').forEach(card => {
+            card.classList.remove('selected');
+        });
+
+        // Scroll to top
+        scrollToTop();
+    }
+
+    // Initialize option selection
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selection from siblings
+                const siblings = this.parentElement.querySelectorAll('.option-card');
+                siblings.forEach(sibling => sibling.classList.remove('selected'));
+
+                // Add selection to clicked card
+                this.classList.add('selected');
+            });
+        });
+    });
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+</script>
+</body>
+</html>

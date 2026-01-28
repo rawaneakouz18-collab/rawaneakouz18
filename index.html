@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage Curated | Sophisticated Travel Discovery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Home page specific styles */
+        .hero-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 3rem 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .testimonial {
+            font-style: italic;
+            color: var(--text-dark);
+            font-size: 1.25rem;
+            line-height: 1.8;
+            text-align: center;
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .testimonial::before,
+        .testimonial::after {
+            content: '"';
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.2;
+            position: absolute;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial::before {
+            top: -1rem;
+            left: -1rem;
+        }
+
+        .testimonial::after {
+            bottom: -2rem;
+            right: -1rem;
+        }
+
+        .quote-author {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            font-style: normal;
+        }
+
+        /* SIMPLE PROFILE PHOTO - NO EFFECTS, NO BORDER */
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 5rem 2rem 4rem;
+            position: relative;
+            background: linear-gradient(to bottom, #ffffff 0%, var(--ivory) 100%);
+        }
+
+        .profile-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 2rem;
+            /* NO BORDER, NO SHADOW, NO TRANSITIONS */
+            border: none;
+            display: block;
+        }
+
+        /* Destination List Section */
+        .destination-list-section {
+            background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .destination-list-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .destination-categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .category-column h4 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .destination-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .destination-item:last-child {
+            border-bottom: none;
+        }
+
+        .destination-item i {
+            color: var(--accent);
+            font-size: 0.75rem;
+        }
+
+        .destination-item:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-image {
+                height: 300px;
+            }
+
+            .profile-circle {
+                width: 120px;
+                height: 120px;
+            }
+
+            .destination-categories {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .destination-list-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header with Profile Photo Above Title - SIMPLE VERSION -->
+<header class="profile-header">
+    <img src="images/photo.jpg" alt="Professional Profile" class="profile-circle">
+    <div class="header-content">
+        <h1 class="site-title">Voyage Curated</h1>
+        <p class="tagline">Sophisticated travel discovery for discerning explorers. Uncovering authentic experiences through meticulous curation.</p>
+    </div>
+</header>
+
+<!-- Minimalist Navigation -->
+<nav class="site-nav">
+    <div class="nav-container">
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link active">Home</a></li>
+            <li><a href="destinations.html" class="nav-link">Destinations</a></li>
+            <li><a href="picker.html" class="nav-link">Destination Picker</a></li>
+            <li><a href="experience.html" class="nav-link">Experiences</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- QR Code -->
+<div class="qr-container">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://github.com/yourusername/voyage-curated"
+         alt="GitHub Repository" class="qr-code">
+    <div class="qr-label">GitHub Source</div>
+</div>
+
+<!-- Hero Image Section -->
+<main>
+    <section class="container">
+        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80"
+             alt="Travel Inspiration" class="hero-image">
+
+        <div class="section">
+            <h2 class="section-title">Curated Travel Intelligence</h2>
+            <div class="stat-grid">
+                <div class="stat-item">
+                    <div class="stat-number">30</div>
+                    <div class="stat-label">Destinations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2.4K</div>
+                    <div class="stat-label">Curated Experiences</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destination List Section -->
+    <section class="destination-list-section">
+        <div class="destination-list-container">
+            <h2 class="section-title">Our Curated Destination Collection</h2>
+            <p class="tagline" style="max-width: 800px; margin: 0 auto 3rem;">Discover our meticulously selected portfolio of 30 sophisticated destinations across the globe, each offering unique character and refined experiences.</p>
+
+            <div class="destination-categories">
+                <!-- Europe -->
+                <div class="category-column">
+                    <h4>Europe</h4>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Paris, France</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Swiss Alps, Switzerland</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Amalfi Coast, Italy</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Barcelona, Spain</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Santorini, Greece</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> London, UK</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Provence, France</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Prague, Czech Republic</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Vienna, Austria</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Edinburgh, Scotland</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Lisbon, Portugal</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Berlin, Germany</div>
+                </div>
+
+                <!-- Asia & Middle East -->
+                <div class="category-column">
+                    <h4>Asia & Middle East</h4>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Kyoto, Japan</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Tokyo, Japan</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Bali, Indonesia</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Seoul, South Korea</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Hong Kong, China</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Bangkok, Thailand</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Hanoi, Vietnam</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Istanbul, Turkey</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Singapore</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Marrakech, Morocco</div>
+                </div>
+
+                <!-- Americas & Oceania -->
+                <div class="category-column">
+                    <h4>Americas & Oceania</h4>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> New York, USA</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Vancouver, Canada</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Rio de Janeiro, Brazil</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Sydney, Australia</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Cape Town, South Africa</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Queenstown, New Zealand</div>
+                    <div class="destination-item"><i class="fas fa-map-marker-alt"></i> Reykjavik, Iceland</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Destinations -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Featured Destinations</h2>
+            <div class="featured-grid">
+                <article class="featured-card">
+                    <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                         alt="Kyoto, Japan" class="card-image">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span>Japan</span>
+                            <span>Cultural Heritage</span>
+                        </div>
+                        <h3>Kyoto</h3>
+                        <p>Ancient temples meet modern sophistication. Discover the harmonious blend of tradition and innovation in Japan's cultural heart.</p>
+                    </div>
+                </article>
+
+                <article class="featured-card">
+                    <img src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                         alt="Swiss Alps" class="card-image">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span>Switzerland</span>
+                            <span>Alpine Luxury</span>
+                        </div>
+                        <h3>Swiss Alps</h3>
+                        <p>Pristine landscapes and sophisticated mountain retreats. Experience alpine luxury with unparalleled natural beauty.</p>
+                    </div>
+                </article>
+
+                <article class="featured-card">
+                    <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                         alt="Amalfi Coast" class="card-image">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span>Italy</span>
+                            <span>Coastal Elegance</span>
+                        </div>
+                        <h3>Amalfi Coast</h3>
+                        <p>Dramatic cliffs meet Mediterranean sophistication. Experience la dolce vita along Italy's most celebrated coastline.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Table -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Destination Intelligence</h2>
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Best Season</th>
+                    <th>Sophistication Level</th>
+                    <th>Average Stay</th>
+                    <th>Cultural Depth</th>
+                    <th>Accessibility</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>Kyoto, Japan</strong></td>
+                    <td>Spring / Autumn</td>
+                    <td>9.8/10</td>
+                    <td>5-7 days</td>
+                    <td>Exceptional</td>
+                    <td>Easy</td>
+                </tr>
+                <tr>
+                    <td><strong>Swiss Alps</strong></td>
+                    <td>Winter / Summer</td>
+                    <td>9.5/10</td>
+                    <td>7-10 days</td>
+                    <td>Moderate</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td><strong>Amalfi Coast</strong></td>
+                    <td>Spring / Early Autumn</td>
+                    <td>9.2/10</td>
+                    <td>4-6 days</td>
+                    <td>High</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td><strong>Paris, France</strong></td>
+                    <td>Spring / Autumn</td>
+                    <td>9.7/10</td>
+                    <td>4-5 days</td>
+                    <td>Exceptional</td>
+                    <td>Easy</td>
+                </tr>
+                <tr>
+                    <td><strong>Marrakech, Morocco</strong></td>
+                    <td>Autumn / Spring</td>
+                    <td>8.9/10</td>
+                    <td>3-5 days</td>
+                    <td>High</td>
+                    <td>Easy</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Testimonial -->
+    <section class="section">
+        <div class="container">
+            <blockquote class="testimonial">
+                Voyage Curated transformed how I experience travel. Their sophisticated approach to discovery goes beyond typical recommendations, offering authentic, meaningful experiences that resonate with discerning travelers.
+            </blockquote>
+            <p class="quote-author">— Alexander Chen, Travel Connoisseur</p>
+        </div>
+    </section>
+
+    <!-- Action Buttons -->
+    <div class="container">
+        <div class="button-group">
+            <button onclick="scrollToTop()" class="btn btn-primary">
+                <i class="fas fa-arrow-up"></i> Return to Top
+            </button>
+
+            <a href="mailto:professional@voyagecurated.com" class="btn btn-secondary">
+                <i class="fas fa-envelope"></i> Contact Us
+            </a>
+
+            <a href="picker.html" class="btn btn-primary">
+                <i class="fas fa-compass"></i> Find Your Destination
+            </a>
+
+            <a href="destinations.html" class="btn btn-secondary">
+                <i class="fas fa-globe"></i> Browse All Destinations
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-content">
+        <!-- ASCII Art -->
+        <div class="ascii-art">
+            __     ___            _
+            \ \   / (_) _____   _(_) __ _  __ _  ___
+            \ \ / /| |/ _ \ \ / / |/ _` |/ _` |/ _ \
+            \ V / | |  __/\ V /| | (_| | (_| | (_) |
+            \_/  |_|\___| \_/ |_|\__,_|\__, |\___/
+            |___/
+        </div>
+
+        <p class="copyright">© 2026 Voyage Curated. All rights reserved. | Sophisticated Travel Discovery</p>
+    </div>
+</footer>
+
+<script>
+    // Scroll to top function
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Table row hover effect
+    document.querySelectorAll('.data-table tr').forEach(row => {
+        row.addEventListener('mouseenter', function() {
+            this.style.transition = 'background-color 0.2s ease';
+        });
+    });
+
+    // Card hover animation
+    document.querySelectorAll('.featured-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const image = this.querySelector('.card-image');
+            if (image) {
+                image.style.transform = 'scale(1.05)';
+                image.style.transition = 'transform 0.5s ease';
+            }
+        });
+
+        card.addEventListener('mouseleave', function() {
+            const image = this.querySelector('.card-image');
+            if (image) {
+                image.style.transform = 'scale(1)';
+            }
+        });
+    });
+
+    // Initialize - REMOVED IMAGE LOADING EFFECTS
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Voyage Curated - Sophisticated Travel Guide loaded successfully.');
+    });
+</script>
+</body>
+</html>
